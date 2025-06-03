@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screens/product_detail_screen.dart';
-import '../models/product.dart';
+import '../../screens/product/product_detail_screen.dart';
+import '../../models/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -38,8 +38,6 @@ class ProductCard extends StatelessWidget {
                       ],
                     ),
                   ),
-
-                  const SizedBox(width: 12),
                 ],
               ),
               const SizedBox(height: 8),

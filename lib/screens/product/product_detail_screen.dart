@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/product.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mini_shop/controllers/cart_controller.dart';
+import '../../models/product.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   final Product product;
@@ -74,14 +76,30 @@ class ProductDetailScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(product.description, style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.shopping_bag_outlined, color: Colors.white),
-              label: const Text("Добавить в корзину", style: TextStyle(color: Colors.white)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-              ),
+            BlocBuilder<CartController, CartState>(
+              builder: (context, state) {
+                final isInCart = state.items.contains(product);
+                return ElevatedButton.icon(
+                  onPressed: () {
+                    if (isInCart) {
+                      context.read<CartController>().removeFromCart(product);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Удалено из корзины")));
+                    } else {
+                      context.read<CartController>().addToCart(product);
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Добавлено в корзину")));
+                    }
+                  },
+                  icon: Icon(isInCart ? Icons.remove_shopping_cart : Icons.shopping_bag_outlined, color: Colors.white),
+                  label: Text(
+                    isInCart ? "Удалить из корзины" : "Добавить в корзину",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                );
+              },
             ),
           ],
         ),
