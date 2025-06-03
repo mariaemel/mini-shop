@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
       category: 'категория',
       price: 100.00,
       discount: 20.00,
-      description: 'описание',
+      description: 'описание описание описание описание описание описание описание',
       weight: '200',
     ),
   ];
@@ -20,7 +20,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Мини-магазин'), centerTitle: true),
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: products.length,
         itemBuilder: (context, index) => ProductCard(product: products[index]),
       ),
