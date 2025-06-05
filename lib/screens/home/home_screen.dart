@@ -1,37 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mini_shop/services/api.dart';
+import 'package:mini_shop/models/product.dart';
 import 'package:mini_shop/screens/cart/cart_screen.dart';
 import 'package:mini_shop/widgets/product/product_card.dart';
-import '../../models/product.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final List<Product> products = [
-    Product(
-      name: 'название',
-      category: 'категория',
-      price: 100.00,
-      discount: 20.00,
-      description: 'описание описание описание описание описание описание описание',
-      weight: '200',
-    ),
-    Product(
-      name: 'название2',
-      category: 'категория',
-      price: 100.00,
-      discount: 30.00,
-      description: 'описание описание описание описание описание описание описание',
-      weight: '200',
-    ),
-    Product(
-      name: 'название3',
-      category: 'категория',
-      price: 100.00,
-      discount: 40.00,
-      description: 'описание описание описание описание описание описание описание',
-      weight: '200',
-    ),
-  ];
+  final API _service = API();
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +23,25 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemCount: products.length,
-        itemBuilder: (context, index) => ProductCard(product: products[index]),
+      body: FutureBuilder<List<Product>>(
+        future: _service.fetchProducts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Ошибка: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('Нет товаров'));
+          }
+
+          final products = snapshot.data!;
+
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            itemCount: products.length,
+            itemBuilder: (context, index) => ProductCard(product: products[index]),
+          );
+        },
       ),
     );
   }
