@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mini_shop/controllers/cart_controller.dart';
-import 'package:mini_shop/screens/home/home_screen.dart';
+import 'package:mini_shop/features/cart/controller/cart_controller.dart';
+import 'package:mini_shop/features/products/app/pages/home_page.dart';
 
 void main() {
   runApp(const MyShopApp());
@@ -17,7 +17,7 @@ class MyShopApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Мини-магазин',
         theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-        home: HomeScreen(),
+        home: HomePage(),
       ),
     );
   }

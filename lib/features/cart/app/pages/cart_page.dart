@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../controllers/cart_controller.dart';
-import '../../widgets/cart/cart_item.dart';
+import 'package:mini_shop/features/products/data/models/product.dart';
+import '../../controller/cart_controller.dart';
+import '../widgets/cart_item.dart';
 
-class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+class CartPage extends StatelessWidget {
+  const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Корзина')),
-      body: BlocBuilder<CartController, CartState>(
-        builder: (context, state) {
-          if (state.items.isEmpty) {
+      body: BlocBuilder<CartController, Map<Product, int>>(
+        builder: (context, cart) {
+          if (cart.isEmpty) {
             return const Center(child: Text('Корзина пуста'));
           }
+          final cartProducts = cart.entries.toList();
+
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemCount: state.items.length,
-            itemBuilder: (context, index) => CartItem(product: state.items[index]),
+            itemCount: cartProducts.length,
+            itemBuilder: (context, index) {
+              final entry = cartProducts[index];
+              return CartItem(product: entry.key, quantity: entry.value);
+            },
           );
         },
       ),
-      bottomNavigationBar: BlocBuilder<CartController, CartState>(
-        builder: (context, state) {
-          if (state.items.isEmpty) return const SizedBox.shrink();
+      bottomNavigationBar: BlocBuilder<CartController, Map<Product, int>>(
+        builder: (context, cart) {
+          if (cart.isEmpty) return const SizedBox.shrink();
 
-          final total = state.items.fold<double>(0, (sum, item) => sum + item.discountedPrice);
+          final total = cart.entries.fold<double>(0, (sum, entry) => sum + (entry.key.discountedPrice * entry.value));
 
           return Container(
             padding: const EdgeInsets.all(16),

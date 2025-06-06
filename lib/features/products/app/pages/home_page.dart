@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mini_shop/services/api/api.dart';
-import 'package:mini_shop/models/product.dart';
-import 'package:mini_shop/screens/cart/cart_screen.dart';
-import 'package:mini_shop/screens/map/map_screen.dart';
-import 'package:mini_shop/widgets/product/product_card.dart';
+import 'package:mini_shop/features/cart/app/pages/cart_page.dart';
+import 'package:mini_shop/features/map/app/pages/map_page.dart';
+import 'package:mini_shop/features/products/data/repos/api.dart';
+import 'package:mini_shop/features/products/data/models/product.dart';
+import 'package:mini_shop/features/products/app/widgets/product_card.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomePage extends StatelessWidget {
+  HomePage({super.key});
 
   final API _service = API();
 
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const CartPage()));
             },
             icon: const Icon(Icons.shopping_bag_outlined),
           ),
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const MapScreen()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const MapPage()));
         },
         child: const Icon(Icons.map),
       ),

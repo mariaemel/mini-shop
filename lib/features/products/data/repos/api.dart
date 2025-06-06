@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../models/product.dart';
+import '../models/product.dart';
 
 class API {
   final Dio _dio = Dio(BaseOptions(baseUrl: 'http://api.fores.space:8080'));
