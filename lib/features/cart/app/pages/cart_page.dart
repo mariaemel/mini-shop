@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mini_shop/features/products/data/models/product.dart';
+import 'package:mini_shop/styles.dart';
 import '../../controller/cart_controller.dart';
 import '../widgets/cart_item.dart';
 
@@ -37,8 +38,8 @@ class CartPage extends StatelessWidget {
           return Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
-              border: Border(top: BorderSide(color: Colors.black12)),
-              color: Colors.white,
+              border: Border(top: BorderSide(color: AppColors.borderBlack)),
+              color: AppColors.white,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -46,11 +47,8 @@ class CartPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Итого:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    Text(
-                      '${total.toStringAsFixed(0)} ₽',
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
+                    const Text('Итого:', style: AppTextStyles.total),
+                    Text('${total.toStringAsFixed(0)} ₽', style: AppTextStyles.total),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -58,11 +56,8 @@ class CartPage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                    ),
-                    child: const Text('Купить', style: TextStyle(fontSize: 16, color: Colors.white)),
+                    style: AppButtonStyles.blackButton,
+                    child: const Text('Купить', style: AppTextStyles.buy),
                   ),
                 ),
               ],

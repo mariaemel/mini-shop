@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_shop/extensions/navigation_extension.dart';
 import 'package:mini_shop/features/cart/app/pages/cart_page.dart';
 import 'package:mini_shop/features/map/app/pages/map_page.dart';
 import 'package:mini_shop/features/products/data/repos/api.dart';
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const CartPage()));
+              context.push(CartPage());
             },
             icon: const Icon(Icons.shopping_bag_outlined),
           ),
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const MapPage()));
+          context.push(const MapPage());
         },
         child: const Icon(Icons.map),
       ),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mini_shop/features/map/data/models/map.dart';
 import 'package:mini_shop/features/map/data/repos/location_service.dart';
+import 'package:mini_shop/styles.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class MapPage extends StatefulWidget {
@@ -47,11 +48,8 @@ class _MapPageState extends State<MapPage> {
                   context,
                 ).showSnackBar(SnackBar(content: Text('Местоположение выбрано: $lat, $long')));
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-              ),
-              child: const Text('Выбрать местоположение', style: TextStyle(color: Colors.white)),
+              style: AppButtonStyles.blackButton,
+              child: const Text('Выбрать местоположение', style: AppTextStyles.selectLocation),
             ),
           ),
         ],

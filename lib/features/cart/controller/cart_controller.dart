@@ -6,7 +6,11 @@ class CartController extends Cubit<Map<Product, int>> {
 
   void addToCart(Product product) {
     final updatedItems = Map<Product, int>.from(state);
-    updatedItems.update(product, (count) => count + 1, ifAbsent: () => 1);
+    if (updatedItems.containsKey(product)) {
+      updatedItems[product] = updatedItems[product]! + 1;
+    } else {
+      updatedItems[product] = 1;
+    }
     emit(updatedItems);
   }
 

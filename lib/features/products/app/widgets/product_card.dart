@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mini_shop/extensions/navigation_extension.dart';
 import 'package:mini_shop/features/cart/controller/cart_controller.dart';
 import 'package:mini_shop/features/product_details/app/pages/product_detail_page.dart';
+import 'package:mini_shop/styles.dart';
 import '../../data/models/product.dart';
 
 class ProductCard extends StatelessWidget {
@@ -21,7 +23,7 @@ class ProductCard extends StatelessWidget {
 
         return InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailPage(product: product)));
+            context.push(ProductDetailPage(product: product));
           },
           child: Card(
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -30,10 +32,10 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.category, style: const TextStyle(fontSize: 10)),
-                  Text(product.name, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  Text(product.category, style: AppTextStyles.categoryItem),
+                  Text(product.name, style: AppTextStyles.nameItem),
                   const SizedBox(height: 5),
-                  Text('$priceText ₽', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  Text('$priceText ₽', style: AppTextStyles.priceItem),
                   const Spacer(),
                   Align(
                     alignment: Alignment.bottomRight,

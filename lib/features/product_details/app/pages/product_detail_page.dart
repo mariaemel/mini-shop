@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mini_shop/features/cart/controller/cart_controller.dart';
+import 'package:mini_shop/styles.dart';
 import '../../../products/data/models/product.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -21,8 +22,8 @@ class ProductDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(product.category, style: const TextStyle(fontSize: 16)),
-            Text(product.name, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            Text(product.category, style: AppTextStyles.categoryDetail),
+            Text(product.name, style: AppTextStyles.nameDetail),
             const SizedBox(height: 8),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,13 +31,10 @@ class ProductDetailPage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('$priceText ₽', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text('$priceText ₽', style: AppTextStyles.priceDetail),
                     Text(
                       hasDiscount ? 'со скидкой ${product.discount.toStringAsFixed(0)}%' : 'без скидки',
-                      style: TextStyle(
-                        color: hasDiscount ? const Color.fromARGB(184, 167, 121, 62) : Colors.grey,
-                        fontSize: 16,
-                      ),
+                      style: TextStyle(color: hasDiscount ? AppColors.beige : AppColors.grey, fontSize: 16),
                     ),
                   ],
                 ),
@@ -45,15 +43,8 @@ class ProductDetailPage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${product.price.toStringAsFixed(0)} ₽',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.grey,
-                          decoration: TextDecoration.lineThrough,
-                        ),
-                      ),
-                      const Text('без скидки', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                      Text('${product.price.toStringAsFixed(0)} ₽', style: AppTextStyles.priceWithoutDiscount),
+                      const Text('без скидки', style: AppTextStyles.textWithoutDiscount),
                     ],
                   ),
               ],
@@ -65,10 +56,10 @@ class ProductDetailPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 1),
-                      color: Colors.transparent,
+                      border: Border.all(color: AppColors.black, width: 1),
+                      color: AppColors.transparent,
                     ),
-                    child: Text(product.weight!, style: const TextStyle(fontWeight: FontWeight.w500)),
+                    child: Text(product.weight!, style: AppTextStyles.weight),
                   ),
                   const SizedBox(width: 8),
                   const Text('объём/вес'),
@@ -76,7 +67,7 @@ class ProductDetailPage extends StatelessWidget {
               ),
             ],
             const SizedBox(height: 8),
-            if (product.description != null) ...[Text(product.description!, style: const TextStyle(fontSize: 18))],
+            if (product.description != null) ...[Text(product.description!, style: AppTextStyles.description)],
             const SizedBox(height: 20),
             BlocBuilder<CartController, Map<Product, int>>(
               builder: (context, cart) {
@@ -91,25 +82,23 @@ class ProductDetailPage extends StatelessWidget {
                               child: GestureDetector(
                                 onTap: () => context.read<CartController>().removeFromCart(product),
                                 child: Container(
-                                  color: Colors.black,
-                                  child: const Center(child: Icon(Icons.remove, color: Colors.white)),
+                                  color: AppColors.black,
+                                  child: const Center(child: Icon(Icons.remove, color: AppColors.white)),
                                 ),
                               ),
                             ),
                             Expanded(
                               child: Container(
-                                color: Colors.black,
-                                child: Center(
-                                  child: Text('$quantity', style: const TextStyle(color: Colors.white, fontSize: 16)),
-                                ),
+                                color: AppColors.black,
+                                child: Center(child: Text('$quantity', style: AppTextStyles.quantityDetail)),
                               ),
                             ),
                             Expanded(
                               child: GestureDetector(
                                 onTap: () => context.read<CartController>().addToCart(product),
                                 child: Container(
-                                  color: Colors.black,
-                                  child: const Center(child: Icon(Icons.add, color: Colors.white)),
+                                  color: AppColors.black,
+                                  child: const Center(child: Icon(Icons.add, color: AppColors.white)),
                                 ),
                               ),
                             ),
@@ -119,12 +108,9 @@ class ProductDetailPage extends StatelessWidget {
                           onPressed: () {
                             context.read<CartController>().addToCart(product);
                           },
-                          icon: const Icon(Icons.shopping_bag_outlined, color: Colors.white),
-                          label: const Text("Добавить в корзину", style: TextStyle(color: Colors.white)),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                          ),
+                          icon: const Icon(Icons.shopping_bag_outlined, color: AppColors.white),
+                          label: const Text("Добавить в корзину", style: AppTextStyles.addToCart),
+                          style: AppButtonStyles.blackButton,
                         ),
                 );
               },
