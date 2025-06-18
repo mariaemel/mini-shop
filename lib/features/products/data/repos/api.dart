@@ -8,7 +8,6 @@ class API {
     try {
       final response = await _dio.get('/products/list');
       final data = response.data as List;
-
       return data.map((item) => Product.fromJson(item)).toList();
     } catch (e) {
       throw Exception(e);
@@ -19,6 +18,16 @@ class API {
     try {
       final response = await _dio.get('/products/current/$id');
       return Product.fromJson(response.data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<List<String>> fetchCategories() async {
+    try {
+      final response = await _dio.get('/categories');
+      final data = response.data as List;
+      return data.map((item) => item.toString()).toList();
     } catch (e) {
       throw Exception(e);
     }
